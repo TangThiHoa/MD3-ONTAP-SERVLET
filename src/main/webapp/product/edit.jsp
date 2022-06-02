@@ -12,8 +12,7 @@
 </head>
 <body>
 <form method="post">
-    <input type="text" name="id" value="${sua.id}">
-    <input type="text" name="name" value="${sua.name}">
+    <input type="text" name="id" value="${xoa.id}">
     <button>Click</button>
 </form>
 </body>

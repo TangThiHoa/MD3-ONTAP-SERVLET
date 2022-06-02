@@ -22,7 +22,7 @@ Danh sách sản phẩm
 
 <c:forEach items="${ds}" var="p">
     <h2>${p.id},${p.name},<a href="/products?act=edit&id=${p.id}">Edit</a>,
-        <a href="/products?act=delete">Delete</a>
+        <a href="/products?act=delete&id=${p.id}">Delete</a>
     </h2>
 
 </c:forEach>

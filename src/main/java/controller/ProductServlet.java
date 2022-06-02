@@ -10,6 +10,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+import static java.nio.file.Files.delete;
+
 @WebServlet(name = "ProductServlet", urlPatterns = "/products")
 public class ProductServlet extends HttpServlet {
     ProductService productService = new ProductServiceImpl();
@@ -27,12 +29,22 @@ public class ProductServlet extends HttpServlet {
             case "edit":
                 showEdit(request,response);
                 break;
+            case "delete":
+                showDelete(request,response);
+                break;
 
             default:
                 showList(request, response);
 
         }
 
+    }
+
+    private void showDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Product product = productService.findById(id);
+        request.setAttribute("xoa", product);
+        request.getRequestDispatcher("product/delete.jsp").forward(request, response);
     }
 
     private void showEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,10 +86,19 @@ public class ProductServlet extends HttpServlet {
             case "edit":
                 edit(request,response);
                 break;
-
+            case "delete":
+                delete(request,response);
+                break;
         }
 
     }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        productService.delete(id);
+        response.sendRedirect("/products");
+    }
+
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
